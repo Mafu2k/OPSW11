@@ -1,0 +1,127 @@
+<UserControl x:Class="OPSW11.Views.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="720" d:DesignWidth="1000">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Background="Transparent">
+        <StackPanel Margin="32,28,32,28">
+
+            <TextBlock Text="Panel główny"
+                       Style="{StaticResource HeadingXL}"
+                       Margin="0,0,0,4"/>
+            <TextBlock x:Name="SystemSubtitleText"
+                       Text="Pobieranie danych systemowych..."
+                       Style="{StaticResource BodyText}"
+                       Margin="0,0,0,24"/>
+
+            <Border Style="{StaticResource Card}" Margin="0,0,0,16">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                        <TextBlock Text="KOMPUTER" Style="{StaticResource CaptionText}" Margin="0,0,0,6"/>
+                        <TextBlock x:Name="MachineNameText" Text="—"
+                                   Style="{StaticResource HeadingM}"
+                                   TextTrimming="CharacterEllipsis"/>
+                        <TextBlock x:Name="OsVersionText" Text="Windows"
+                                   Style="{StaticResource BodyText}"
+                                   Margin="0,4,0,0" TextWrapping="Wrap"/>
+                    </StackPanel>
+
+                    <Rectangle Grid.Column="1" Fill="{DynamicResource SeparatorBrush}"/>
+
+                    <StackPanel Grid.Column="2" Margin="20,0,0,0">
+                        <TextBlock Text="PROCESOR" Style="{StaticResource CaptionText}" Margin="0,0,0,6"/>
+                        <TextBlock x:Name="ProcessorText" Text="—"
+                                   Style="{StaticResource BodyText}"
+                                   TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Grid Margin="0,0,0,16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="12"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="12"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="12"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Style="{StaticResource Card}">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                            <Ellipse Width="6" Height="6" Fill="{DynamicResource AccentBrush}"
+                                     VerticalAlignment="Center" Margin="0,0,9,0"/>
+                            <TextBlock Text="UŻYCIE CPU" Style="{StaticResource CaptionText}" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <TextBlock x:Name="CpuValueText" Text="—" Style="{StaticResource MetricValue}"/>
+                        <ProgressBar x:Name="CpuProgressBar" Value="0" Maximum="100" Margin="0,12,0,0"/>
+                        <TextBlock x:Name="CpuDetailText" Text="Obciążenie procesora"
+                                   Style="{StaticResource CaptionText}" Margin="0,8,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="2" Style="{StaticResource Card}">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                            <Ellipse Width="6" Height="6" Fill="#818CF8"
+                                     VerticalAlignment="Center" Margin="0,0,9,0"/>
+                            <TextBlock Text="PAMIĘĆ RAM" Style="{StaticResource CaptionText}" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <TextBlock x:Name="RamValueText" Text="—" Style="{StaticResource MetricValue}"/>
+                        <ProgressBar x:Name="RamProgressBar" Value="0" Maximum="100" Margin="0,12,0,0"/>
+                        <TextBlock x:Name="RamDetailText" Text="—"
+                                   Style="{StaticResource CaptionText}" Margin="0,8,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="4" Style="{StaticResource Card}">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                            <Ellipse Width="6" Height="6" Fill="#10B981"
+                                     VerticalAlignment="Center" Margin="0,0,9,0"/>
+                            <TextBlock Text="DYSK (C:)" Style="{StaticResource CaptionText}" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <TextBlock x:Name="DiskValueText" Text="—" Style="{StaticResource MetricValue}"/>
+                        <ProgressBar x:Name="DiskProgressBar" Value="0" Maximum="100" Margin="0,12,0,0"/>
+                        <TextBlock x:Name="DiskDetailText" Text="—"
+                                   Style="{StaticResource CaptionText}" Margin="0,8,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="6" Style="{StaticResource Card}">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                            <Ellipse Width="6" Height="6" Fill="#F59E0B"
+                                     VerticalAlignment="Center" Margin="0,0,9,0"/>
+                            <TextBlock Text="CZAS PRACY" Style="{StaticResource CaptionText}" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <TextBlock x:Name="UptimeText" Text="—" Style="{StaticResource MetricValue}"/>
+                        <Separator Margin="0,12"/>
+                        <TextBlock Text="od ostatniego startu"
+                                   Style="{StaticResource CaptionText}"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Border Style="{StaticResource CardCompact}">
+                <StackPanel>
+                    <TextBlock Text="SZYBKIE AKCJE" Style="{StaticResource CaptionText}" Margin="0,0,0,4"/>
+                    <TextBlock Text="Użyj panelu bocznego aby uruchomić naprawę: Szybka naprawa, Zaawansowana lub własne opcje."
+                               Style="{StaticResource BodyText}"/>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
