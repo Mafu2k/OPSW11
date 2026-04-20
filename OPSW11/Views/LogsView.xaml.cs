@@ -10,14 +10,12 @@ namespace OPSW11.Views;
 
 public partial class LogsView : UserControl
 {
-    private readonly LoggingService _logger;
+    private readonly LoggingService _logger = LoggingService.Instance;
     private string _filtr = "All";
 
     public LogsView()
     {
         InitializeComponent();
-
-        _logger = LoggingService.Instance;
 
         LogListBox.ItemsSource = _logger.Entries;
 
@@ -39,6 +37,8 @@ public partial class LogsView : UserControl
 
     private void ZastosujFiltr()
     {
+        if (LogListBox == null) return;
+
         Dispatcher.Invoke(() =>
         {
             if (_filtr == "All")
