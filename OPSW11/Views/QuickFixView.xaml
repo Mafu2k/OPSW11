@@ -67,6 +67,15 @@
                 </StackPanel>
             </Border>
 
+            <Button x:Name="CancelButton"
+                    Content="Anuluj"
+                    Style="{StaticResource SecondaryButton}"
+                    Padding="0,14" FontSize="14"
+                    HorizontalAlignment="Stretch"
+                    Visibility="Collapsed"
+                    Margin="0,8,0,0"
+                    Click="CancelButton_Click"/>
+
             <Button x:Name="RunButton"
                     Content="URUCHOM SZYBKĄ NAPRAWĘ"
                     Style="{StaticResource PrimaryButton}"
