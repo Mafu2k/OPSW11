@@ -5,7 +5,7 @@
         mc:Ignorable="d"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        Title="WO11"
+        Title="OPSW11"
         Height="780" Width="1260"
         MinHeight="600" MinWidth="900"
         WindowStartupLocation="CenterScreen"
@@ -33,11 +33,11 @@
                         <Image Source="Resources/icon.png" Width="28" Height="28" Margin="0,0,10,0"
                                RenderOptions.BitmapScalingMode="HighQuality"/>
                         <StackPanel VerticalAlignment="Center">
-                            <TextBlock Text="WO11"
+                            <TextBlock Text="OPSW11"
                                        FontSize="17" FontWeight="Bold"
                                        Foreground="{DynamicResource TextPrimaryBrush}"
                                        FontFamily="Segoe UI Variable Display, Segoe UI, Arial"/>
-                            <TextBlock Text="Narzędzia systemu"
+                            <TextBlock Text="System Optimizer"
                                        FontSize="10"
                                        Foreground="{DynamicResource TextMutedBrush}"/>
                         </StackPanel>
@@ -120,7 +120,7 @@
                             HorizontalAlignment="Stretch"
                             Margin="0,0,0,8"
                             Click="ThemeToggle_Click"/>
-                    <TextBlock Text="WO11  v1.0"
+                    <TextBlock Text="OPSW11  v1.0"
                                FontSize="11" Foreground="{DynamicResource TextMutedBrush}"
                                Margin="2,0,0,0"/>
                 </StackPanel>

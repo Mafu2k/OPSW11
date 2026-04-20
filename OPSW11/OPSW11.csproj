@@ -7,8 +7,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <AssemblyTitle>WO11</AssemblyTitle>
-    <Product>WO11 System Tools</Product>
+    <AssemblyTitle>OPSW11</AssemblyTitle>
+    <Product>OPSW11 System Tools</Product>
     <Version>1.0.0</Version>
     <RootNamespace>OPSW11</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
