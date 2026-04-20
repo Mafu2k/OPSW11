@@ -1,4 +1,4 @@
-# WO11 System Optimizer
+# OPSW11 System Optimizer
 
 > A lightweight, open-source Windows system optimization tool built with WPF and .NET 10.
 
