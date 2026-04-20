@@ -1,0 +1,67 @@
+## .NET / Visual Studio ##
+
+# Build outputs
+bin/
+obj/
+dist/
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.db
+
+# Visual Studio cache / options
+.vs/
+.idea/
+*.aps
+*.ncb
+*.opendb
+*.opensdf
+*.sdf
+*.cachefile
+*.VC.db
+*.VC.opendb
+
+# Rider
+.idea/
+
+# Test results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+
+# Publish output
+publish/
+PublishProfiles/
+
+# Microsoft Azure
+ServiceFabricBackup/
+*.mfrac
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# macOS (for contributors on Mac)
+.DS_Store
+.AppleDouble
+.LSOverride

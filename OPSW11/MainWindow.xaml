@@ -1,0 +1,172 @@
+<Window x:Class="OPSW11.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:views="clr-namespace:OPSW11.Views"
+        mc:Ignorable="d"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Title="WO11"
+        Height="780" Width="1260"
+        MinHeight="600" MinWidth="900"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource AppBackground}"
+        FontFamily="Segoe UI Variable Text, Segoe UI, Arial">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="210"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- ══════════════════════════════════
+             SIDEBAR
+        ══════════════════════════════════ -->
+        <Border Grid.Column="0"
+                Background="{DynamicResource SidebarBackground}"
+                BorderBrush="{DynamicResource CardBorderBrush}"
+                BorderThickness="0,0,1,0">
+            <DockPanel>
+
+                <!-- Brand -->
+                <StackPanel DockPanel.Dock="Top" Margin="18,24,18,20">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Resources/icon.png" Width="28" Height="28" Margin="0,0,10,0"
+                               RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="WO11"
+                                       FontSize="17" FontWeight="Bold"
+                                       Foreground="{DynamicResource TextPrimaryBrush}"
+                                       FontFamily="Segoe UI Variable Display, Segoe UI, Arial"/>
+                            <TextBlock Text="Narzędzia systemu"
+                                       FontSize="10"
+                                       Foreground="{DynamicResource TextMutedBrush}"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Admin badge -->
+                    <Border x:Name="AdminBadge"
+                            Background="{DynamicResource AccentSubtle}"
+                            CornerRadius="6" Padding="10,5" Margin="0,14,0,0"
+                            HorizontalAlignment="Left">
+                        <TextBlock x:Name="AdminBadgeText"
+                                   Text="Tryb administratora"
+                                   FontSize="10" FontWeight="SemiBold"
+                                   Foreground="{DynamicResource AccentBrush}"/>
+                    </Border>
+                </StackPanel>
+
+                <Separator DockPanel.Dock="Top" Margin="14,0,14,8"/>
+
+                <!-- Navigation -->
+                <StackPanel DockPanel.Dock="Top" Margin="10,0">
+                    <Button x:Name="BtnDashboard" Tag="Dashboard" Click="NavButton_Click"
+                            Style="{StaticResource NavButtonActive}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="&#xE80F;" FontFamily="Segoe MDL2 Assets"
+                                       FontSize="14" Width="18" VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"/>
+                            <TextBlock Text="Panel główny" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnQuickFix" Tag="QuickFix" Click="NavButton_Click"
+                            Style="{StaticResource NavButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="&#xE8B7;" FontFamily="Segoe MDL2 Assets"
+                                       FontSize="14" Width="18" VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"/>
+                            <TextBlock Text="Szybka naprawa" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnAdvancedFix" Tag="AdvancedFix" Click="NavButton_Click"
+                            Style="{StaticResource NavButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="&#xE90F;" FontFamily="Segoe MDL2 Assets"
+                                       FontSize="14" Width="18" VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"/>
+                            <TextBlock Text="Zaawansowana" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnCustomFix" Tag="CustomFix" Click="NavButton_Click"
+                            Style="{StaticResource NavButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="&#xE713;" FontFamily="Segoe MDL2 Assets"
+                                       FontSize="14" Width="18" VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"/>
+                            <TextBlock Text="Naprawa własna" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnLogs" Tag="Logs" Click="NavButton_Click"
+                            Style="{StaticResource NavButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="&#xE8A9;" FontFamily="Segoe MDL2 Assets"
+                                       FontSize="14" Width="18" VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"/>
+                            <TextBlock Text="Dziennik" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <!-- Spacer -->
+                <Grid DockPanel.Dock="Bottom"/>
+
+                <!-- Bottom controls -->
+                <StackPanel DockPanel.Dock="Bottom" Margin="14,0,14,16">
+                    <Separator Margin="0,0,0,10"/>
+                    <!-- Theme toggle -->
+                    <Button x:Name="ThemeToggleButton"
+                            Content="☀  Jasny motyw"
+                            Style="{StaticResource SecondaryButton}"
+                            Padding="12,7" FontSize="12"
+                            HorizontalAlignment="Stretch"
+                            Margin="0,0,0,8"
+                            Click="ThemeToggle_Click"/>
+                    <TextBlock Text="WO11  v1.0"
+                               FontSize="11" Foreground="{DynamicResource TextMutedBrush}"
+                               Margin="2,0,0,0"/>
+                </StackPanel>
+
+            </DockPanel>
+        </Border>
+
+        <!-- ══════════════════════════════════
+             CONTENT AREA
+        ══════════════════════════════════ -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <ContentControl x:Name="MainContent" Grid.Row="0"/>
+
+            <!-- Status bar -->
+            <Border Grid.Row="1"
+                    Background="{DynamicResource StatusBarBackground}"
+                    BorderBrush="{DynamicResource CardBorderBrush}"
+                    BorderThickness="0,1,0,0"
+                    Padding="16,6">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Ellipse Grid.Column="0" Width="7" Height="7"
+                             Fill="{DynamicResource SuccessBrush}"
+                             VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    <TextBlock Grid.Column="1"
+                               x:Name="StatusBarMessage"
+                               Text="Gotowy"
+                               FontSize="11"
+                               Foreground="{DynamicResource TextMutedBrush}"
+                               VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="2"
+                               x:Name="StatusBarClock"
+                               FontSize="11" FontFamily="Consolas, Courier New"
+                               Foreground="{DynamicResource TextMutedBrush}"
+                               VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

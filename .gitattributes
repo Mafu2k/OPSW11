@@ -1,0 +1,8 @@
+# Normalize line endings to CRLF on checkout (Windows project)
+* text=auto eol=crlf
+
+# Binary files — don't normalize
+*.png binary
+*.ico binary
+*.exe binary
+*.dll binary
