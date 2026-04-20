@@ -58,7 +58,7 @@ Log files are stored in `%APPDATA%\WO11\Logi\` and automatically rotated after 3
 ## Build from Source
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/WO11-System-Optimizer.git
+git clone https://github.com/Mafu2k/WO11-System-Optimizer.git
 cd WO11-System-Optimizer/OPSW11
 dotnet build OPSW11.csproj -c Release
 ```
