@@ -1,3 +1,4 @@
+using System.Text;
 using System.Windows;
 using OPSW11.Helpers;
 
@@ -7,6 +8,8 @@ public partial class App : Application
 {
     protected override void OnStartup(StartupEventArgs e)
     {
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
         base.OnStartup(e);
 
         if (!AdminHelper.IsRunningAsAdministrator())

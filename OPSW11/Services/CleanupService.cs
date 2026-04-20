@@ -70,16 +70,17 @@ public class CleanupService
                 IntPtr.Zero, null,
                 SHERB_NOCONFIRMATION | SHERB_NOPROGRESSUI | SHERB_NOSOUND);
 
-            bool juzPusty = wynik == unchecked((int)0x80070057);
+            bool juzPusty   = wynik == unchecked((int)0x80070057);
+            bool niemaKosza = wynik == unchecked((int)0x8000FFFF);
 
-            if (wynik == 0 || juzPusty)
+            if (wynik == 0 || juzPusty || niemaKosza)
             {
-                _logger.LogSuccess("Kosz opróżniony.");
+                _logger.LogSuccess("Kosz opróżniony (lub był już pusty).");
                 return OperationResult.Success("Kosz opróżniony.");
             }
 
-            _logger.LogError($"SHEmptyRecycleBin błąd: 0x{wynik:X8}");
-            return OperationResult.Failure($"Błąd opróżniania kosza: 0x{wynik:X8}");
+            _logger.LogWarning($"Kosz: kod 0x{wynik:X8} — pominięto.");
+            return OperationResult.Success($"Kosz: pominięto (0x{wynik:X8}).");
         });
     }
 
