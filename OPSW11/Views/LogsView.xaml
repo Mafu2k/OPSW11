@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:loc="clr-namespace:OPSW11.Localization"
              mc:Ignorable="d"
              d:DesignHeight="720" d:DesignWidth="1000">
 
@@ -14,9 +15,9 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Margin="0,0,0,20">
-            <TextBlock Text="Dziennik zdarzeń"
+            <TextBlock Text="{loc:Loc Log_Title}"
                        Style="{StaticResource HeadingXL}" Margin="0,0,0,4"/>
-            <TextBlock Text="Historia wszystkich operacji wykonanych w tej sesji."
+            <TextBlock Text="{loc:Loc Log_Subtitle}"
                        Style="{StaticResource BodyText}"/>
         </StackPanel>
 
@@ -31,25 +32,26 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" Text="FILTR:"
+                <TextBlock Grid.Column="0" Text="{loc:Loc Log_Filter}"
                            Style="{StaticResource CaptionText}"
                            VerticalAlignment="Center" Margin="0,0,10,0"/>
 
-                <RadioButton Grid.Column="1" x:Name="FilterAll" Content="Wszystko"
+                <RadioButton Grid.Column="1" x:Name="FilterAll" Content="{loc:Loc Log_All}"
                              IsChecked="True" GroupName="LogFilter"
                              VerticalAlignment="Center" Margin="0,0,8,0"
                              Checked="Filter_Changed"/>
-                <RadioButton Grid.Column="2" x:Name="FilterWarning" Content="Ostrzeżenie"
+                <RadioButton Grid.Column="2" x:Name="FilterWarning" Content="{loc:Loc Log_Warning}"
                              GroupName="LogFilter"
                              VerticalAlignment="Center" Margin="0,0,8,0"
                              Checked="Filter_Changed"/>
-                <RadioButton Grid.Column="3" x:Name="FilterError" Content="Błąd"
+                <RadioButton Grid.Column="3" x:Name="FilterError" Content="{loc:Loc Log_Error}"
                              GroupName="LogFilter"
                              VerticalAlignment="Center" Margin="0,0,8,0"
                              Checked="Filter_Changed"/>
-                <RadioButton Grid.Column="4" x:Name="FilterSuccess" Content="Sukces"
+                <RadioButton Grid.Column="4" x:Name="FilterSuccess" Content="{loc:Loc Log_Success}"
                              GroupName="LogFilter"
                              VerticalAlignment="Center"
                              Checked="Filter_Changed"/>
@@ -59,12 +61,17 @@
                         Margin="12,2" HorizontalAlignment="Right"/>
 
                 <Button Grid.Column="6"
-                        Content="Otwórz plik dziennika"
+                        Content="{loc:Loc Log_OpenFile}"
                         Style="{StaticResource SecondaryButton}"
                         Padding="12,6" Margin="0,0,6,0"
                         Click="OpenLogFile_Click"/>
                 <Button Grid.Column="7"
-                        Content="Wyczyść"
+                        Content="{loc:Loc Log_Export}"
+                        Style="{StaticResource SecondaryButton}"
+                        Padding="12,6" Margin="0,0,6,0"
+                        Click="ExportLogs_Click"/>
+                <Button Grid.Column="8"
+                        Content="{loc:Loc Log_Clear}"
                         Style="{StaticResource SecondaryButton}"
                         Padding="12,6"
                         Click="ClearLogs_Click"/>

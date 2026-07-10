@@ -1,123 +1,54 @@
-# OPSW11 System Optimizer
+# OPSW11
 
-> A lightweight, open-source Windows system optimization tool built with WPF and .NET 10.
+A small Windows 10/11 maintenance tool I wrote in C# (WPF, .NET 10). It wraps the usual
+"fix my PC" routine (temp cleanup, SFC, DISM, resetting Windows Update or the network stack)
+in one window, so I don't have to remember the commands or run them one by one.
 
-![.NET](https://img.shields.io/badge/.NET-10.0-512BD4?logo=dotnet)
-![Platform](https://img.shields.io/badge/platform-Windows%2010%2F11-0078D6?logo=windows)
-![License](https://img.shields.io/badge/license-MIT-green)
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
+The app needs administrator rights (it asks via UAC on launch) and creates a system restore
+point before anything that changes the system.
 
----
+## What it does
 
-## Features
+- **Quick Fix** is a safe one-click cleanup with no restart needed: user and Windows temp
+  files, Prefetch, DNS cache and the Windows Update download cache.
+- **Advanced Fix** runs `sfc /scannow`, `DISM /RestoreHealth`, a full Windows Update reset
+  and `netsh` Winsock/TCP-IP reset, one after another.
+- **Custom Fix** lets you pick any of the 14 individual operations (cleanup, network,
+  system repair, services, disk TRIM/defrag).
+- **Dashboard** shows live CPU, RAM, C: usage and uptime.
+- **Logs** keeps a filterable session log that can be exported. Log files go to
+  `%APPDATA%\OPSW11\Logi` and are rotated after 30 days.
 
-### 🚀 Quick Fix
-One-click cleanup that runs a safe set of operations with no restart required:
-- User temp files (`%TEMP%`)
-- Windows temp directory
-- Prefetch cache
-- DNS cache flush
-- Windows Update download cache
+Every long-running step can be cancelled. Cancelling kills the whole child process tree,
+so no elevated `sfc`/`dism` stays behind. The UI is available in Polish, English, German,
+Spanish, French and Ukrainian, with a light and dark theme. Both choices are remembered
+in `%APPDATA%\OPSW11\settings.json`.
 
-### 🔧 Advanced Fix
-Deep system repair pipeline - automatically creates a restore point before starting:
-- **SFC /scannow** - scans and repairs protected system files
-- **DISM /RestoreHealth** - repairs the Windows component store
-- **Windows Update reset** - stops WU services, wipes `SoftwareDistribution` and `catroot2`, re-registers DLLs
-- **Netsh full stack reset** - resets Winsock and TCP/IP
+## Building
 
-### 🛠 Custom Fix
-Build your own repair checklist from 14 individual operations across five categories: Cleanup, Network, System Repair, Services, and Disk.
-
-All long-running operations support **live cancellation** via an "Anuluj" button.
-
-### 📊 Dashboard
-Real-time system metrics refreshed every 2 seconds:
-- CPU load
-- RAM usage
-- Disk usage (drive C:)
-- System uptime
-- OS version and hostname
-
-### 📋 Logs
-Session-level event journal with severity filtering (Info / Warning / Error / Success).  
-Log files are stored in `%APPDATA%\WO11\Logi\` and automatically rotated after 30 days.
-
----
-
-## Requirements
-
-| Requirement | Value |
-|---|---|
-| OS | Windows 10 / 11 (64-bit) |
-| Runtime | [.NET 10 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/10.0) |
-| Privileges | **Administrator** (required - UAC prompt on launch) |
-
----
-
-## Build from Source
+You need the .NET 10 SDK on Windows.
 
 ```bash
-git clone https://github.com/Mafu2k/WO11-System-Optimizer.git
-cd WO11-System-Optimizer/OPSW11
-dotnet build OPSW11.csproj -c Release
+cd OPSW11
+dotnet build -c Release
+
+# single self-contained exe in dist/
+dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o dist/
 ```
 
-### Publish as self-contained executable
+## A few implementation notes
 
-```bash
-dotnet publish OPSW11.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o dist/
-```
+Since the app runs elevated, I tried not to give it easy ways to be abused:
 
-The output binary (`dist\OPSW11.exe`) requires no separate runtime installation.
+- system tools (`sc.exe`, `net.exe`, ...) are always called by their full `System32` path
+  (`Helpers/SystemPaths.cs`), never through `PATH`,
+- service names and drive letters are validated before they go into command-line arguments,
+- the manifest requires admin, so the app never quietly runs with half the permissions.
 
----
-
-## Project Structure
-
-```
-OPSW11/
-├── Helpers/
-│   ├── AdminHelper.cs        # UAC elevation & admin check
-│   ├── AppServices.cs        # Shared service instances (DI-lite)
-│   ├── FormatHelper.cs       # Byte / uptime formatting
-│   ├── ProcessHelper.cs      # Async process runner with CancellationToken
-│   └── SystemPaths.cs        # Full paths to Windows system tools (anti PATH-hijacking)
-│
-├── Models/
-│   ├── LogEntry.cs           # Log entry model
-│   ├── OperationResult.cs    # Result type for all operations
-│   └── SelectableOperation.cs
-│
-├── Services/
-│   ├── BackupService.cs      # System restore point + service state backup
-│   ├── CleanupService.cs     # Temp files, Prefetch, Recycle Bin, WU cache
-│   ├── DiskService.cs        # SSD TRIM / HDD defrag (auto-detection)
-│   ├── LoggingService.cs     # Singleton logger with 30-day file rotation
-│   ├── NetworkService.cs     # DNS flush, service restart, netsh stack reset
-│   ├── RepairService.cs      # SFC, DISM, Windows Update reset
-│   ├── ServiceManagerService.cs
-│   └── SystemInfoService.cs  # Real-time CPU / RAM / disk metrics via Win32
-│
-└── Views/
-    ├── AdvancedFixView       # Advanced repair pipeline UI
-    ├── CustomFixView         # Checklist-based custom repair UI
-    ├── DashboardView         # Real-time system metrics dashboard
-    ├── LogsView              # Session log viewer
-    └── QuickFixView          # One-click quick cleanup UI
-```
-
----
-
-## Security Notes
-
-- All system tools are referenced by **full absolute path** (`System32\sc.exe`, `System32\net.exe`, etc.) to eliminate PATH-hijacking risk.
-- Drive letter input is validated (`char.IsAsciiLetter`) before being interpolated into process arguments.
-- The application requires administrator privileges and declares this in `app.manifest` - it will not silently downgrade.
-- `BackupService` creates a **VSS restore point** before every destructive operation.
-
----
+The code is split into `Services/` (one class per area: cleanup, repair, network, disk,
+backup, ...), `Views/` for the five screens and `Localization/` with a tiny `{loc:Loc Key}`
+markup extension that switches language live. Changes are listed in [CHANGELOG.md](CHANGELOG.md).
 
 ## License
 
-MIT © Łukasz Janicki - see [LICENSE](LICENSE) for details.
+MIT

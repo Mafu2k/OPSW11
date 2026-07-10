@@ -1,13 +1,20 @@
 using System.Diagnostics;
 using System.ServiceProcess;
+using System.Text.RegularExpressions;
 using OPSW11.Helpers;
 using OPSW11.Models;
 
 namespace OPSW11.Services;
 
-public class ServiceManagerService
+public partial class ServiceManagerService
 {
     private readonly LoggingService _logger;
+
+    [GeneratedRegex(@"^[A-Za-z0-9_.\-]{1,256}$")]
+    private static partial Regex ServiceNameRegex();
+
+    public static bool IsValidServiceName(string? name)
+        => !string.IsNullOrWhiteSpace(name) && ServiceNameRegex().IsMatch(name);
 
     public static readonly (string Name, string DisplayName, string Reason)[] OptimizableServices =
     [
@@ -32,6 +39,12 @@ public class ServiceManagerService
 
             foreach (string name in serviceNames)
             {
+                if (!IsValidServiceName(name))
+                {
+                    _logger.LogWarning($"  Skipped invalid service name: '{name}'");
+                    continue;
+                }
+
                 try
                 {
                     _logger.LogInfo($"Setting '{name}' startup to Manual...");

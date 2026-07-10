@@ -3,20 +3,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:loc="clr-namespace:OPSW11.Localization"
              mc:Ignorable="d"
              d:DesignHeight="720" d:DesignWidth="1000">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto" Background="Transparent">
         <StackPanel Margin="32,28,32,28">
 
-            <TextBlock Text="Szybka naprawa"
+            <TextBlock Text="{loc:Loc QF_Title}"
                        Style="{StaticResource HeadingXL}" Margin="0,0,0,4"/>
-            <TextBlock Text="Wykonuje bezpieczne operacje bez konieczności restartu."
+            <TextBlock Text="{loc:Loc QF_Subtitle}"
                        Style="{StaticResource BodyText}" Margin="0,0,0,24"/>
 
             <Border Style="{StaticResource Card}" Margin="0,0,0,16">
                 <StackPanel>
-                    <TextBlock Text="WYKONA:" Style="{StaticResource CaptionText}" Margin="0,0,0,12"/>
+                    <TextBlock Text="{loc:Loc QF_WillDo}" Style="{StaticResource CaptionText}" Margin="0,0,0,12"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -31,8 +32,8 @@
                         <Border Grid.Row="0" Grid.Column="0" Background="{DynamicResource InputBackground}"
                                 CornerRadius="8" Padding="14,12" Margin="0,0,0,8">
                             <StackPanel>
-                                <TextBlock Text="Czyszczenie plików tymczasowych" Style="{StaticResource HeadingM}" Margin="0,0,0,4"/>
-                                <TextBlock Text="Usuwa zawartość %TEMP% i C:\Windows\Temp."
+                                <TextBlock Text="{loc:Loc QF_TempTitle}" Style="{StaticResource HeadingM}" Margin="0,0,0,4"/>
+                                <TextBlock Text="{loc:Loc QF_TempDesc}"
                                            Style="{StaticResource BodyText}" FontSize="12"/>
                             </StackPanel>
                         </Border>
@@ -40,8 +41,8 @@
                         <Border Grid.Row="0" Grid.Column="2" Background="{DynamicResource InputBackground}"
                                 CornerRadius="8" Padding="14,12" Margin="0,0,0,8">
                             <StackPanel>
-                                <TextBlock Text="Czyszczenie Prefetch" Style="{StaticResource HeadingM}" Margin="0,0,0,4"/>
-                                <TextBlock Text="Opróżnia pamięć podręczną Prefetch dla szybszego startu."
+                                <TextBlock Text="{loc:Loc QF_PrefetchTitle}" Style="{StaticResource HeadingM}" Margin="0,0,0,4"/>
+                                <TextBlock Text="{loc:Loc QF_PrefetchDesc}"
                                            Style="{StaticResource BodyText}" FontSize="12"/>
                             </StackPanel>
                         </Border>
@@ -49,8 +50,8 @@
                         <Border Grid.Row="1" Grid.Column="0" Background="{DynamicResource InputBackground}"
                                 CornerRadius="8" Padding="14,12" Margin="0,0,0,0">
                             <StackPanel>
-                                <TextBlock Text="Reset cache DNS" Style="{StaticResource HeadingM}" Margin="0,0,0,4"/>
-                                <TextBlock Text="Czyści cache resolwera DNS — naprawia błędne adresy."
+                                <TextBlock Text="{loc:Loc QF_DnsTitle}" Style="{StaticResource HeadingM}" Margin="0,0,0,4"/>
+                                <TextBlock Text="{loc:Loc QF_DnsDesc}"
                                            Style="{StaticResource BodyText}" FontSize="12"/>
                             </StackPanel>
                         </Border>
@@ -58,8 +59,8 @@
                         <Border Grid.Row="1" Grid.Column="2" Background="{DynamicResource InputBackground}"
                                 CornerRadius="8" Padding="14,12" Margin="0,0,0,0">
                             <StackPanel>
-                                <TextBlock Text="Cache Windows Update" Style="{StaticResource HeadingM}" Margin="0,0,0,4"/>
-                                <TextBlock Text="Zatrzymuje usługi WU i czyści folder pobierania."
+                                <TextBlock Text="{loc:Loc QF_WuTitle}" Style="{StaticResource HeadingM}" Margin="0,0,0,4"/>
+                                <TextBlock Text="{loc:Loc QF_WuDesc}"
                                            Style="{StaticResource BodyText}" FontSize="12"/>
                             </StackPanel>
                         </Border>
@@ -68,7 +69,7 @@
             </Border>
 
             <Button x:Name="CancelButton"
-                    Content="Anuluj"
+                    Content="{loc:Loc Btn_Cancel}"
                     Style="{StaticResource SecondaryButton}"
                     Padding="0,14" FontSize="14"
                     HorizontalAlignment="Stretch"
@@ -77,7 +78,7 @@
                     Click="CancelButton_Click"/>
 
             <Button x:Name="RunButton"
-                    Content="URUCHOM SZYBKĄ NAPRAWĘ"
+                    Content="{loc:Loc QF_RunButton}"
                     Style="{StaticResource PrimaryButton}"
                     FontSize="14" Padding="0,14"
                     HorizontalAlignment="Stretch"
@@ -86,10 +87,10 @@
             <Border x:Name="ProgressPanel" Style="{StaticResource Card}"
                     Margin="0,16,0,0" Visibility="Collapsed">
                 <StackPanel>
-                    <TextBlock Text="POSTĘP" Style="{StaticResource CaptionText}" Margin="0,0,0,12"/>
+                    <TextBlock Text="{loc:Loc Progress_Title}" Style="{StaticResource CaptionText}" Margin="0,0,0,12"/>
                     <ProgressBar x:Name="OverallProgress" Value="0" Maximum="5" Height="6" Margin="0,12,0,0"/>
                     <TextBlock x:Name="CurrentOperationText"
-                               Text="Uruchamianie..."
+                               Text="{loc:Loc QF_Starting}"
                                Style="{StaticResource BodyText}" Margin="0,0,0,12"/>
                     <ItemsControl x:Name="OperationStatusList">
                         <ItemsControl.ItemTemplate>

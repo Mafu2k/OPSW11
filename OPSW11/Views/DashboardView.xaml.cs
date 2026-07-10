@@ -1,6 +1,7 @@
 using System.Windows.Controls;
 using System.Windows.Threading;
 using OPSW11.Helpers;
+using OPSW11.Localization;
 using OPSW11.Services;
 
 namespace OPSW11.Views;
@@ -33,7 +34,7 @@ public partial class DashboardView : UserControl
 
         CpuValueText.Text     = $"{snapshot.CpuUsagePercent:F0}%";
         CpuProgressBar.Value  = snapshot.CpuUsagePercent;
-        CpuDetailText.Text    = "Obciążenie procesora";
+        CpuDetailText.Text    = Loc.T("Dash_CpuLoad");
 
         RamValueText.Text     = $"{snapshot.RamUsedPercent:F0}%";
         RamProgressBar.Value  = snapshot.RamUsedPercent;

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:loc="clr-namespace:OPSW11.Localization"
              mc:Ignorable="d"
              d:DesignHeight="720" d:DesignWidth="1000">
 
@@ -15,14 +16,14 @@
         <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" Background="Transparent">
             <StackPanel Margin="32,28,32,16">
 
-                <TextBlock Text="Naprawa własna"
+                <TextBlock Text="{loc:Loc CF_Title}"
                            Style="{StaticResource HeadingXL}" Margin="0,0,0,4"/>
-                <TextBlock Text="Zaznacz operacje do wykonania i kliknij Uruchom wybrane."
+                <TextBlock Text="{loc:Loc CF_Subtitle}"
                            Style="{StaticResource BodyText}" Margin="0,0,0,24"/>
 
                 <Border Style="{StaticResource Card}" Margin="0,0,0,12">
                     <StackPanel>
-                        <TextBlock Text="CZYSZCZENIE" Style="{StaticResource CaptionText}" Margin="0,0,0,12"/>
+                        <TextBlock Text="{loc:Loc CF_Group_Cleanup}" Style="{StaticResource CaptionText}" Margin="0,0,0,12"/>
                         <ItemsControl x:Name="CleanupOpsPanel">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
@@ -43,7 +44,7 @@
 
                 <Border Style="{StaticResource Card}" Margin="0,0,0,12">
                     <StackPanel>
-                        <TextBlock Text="SIEĆ" Style="{StaticResource CaptionText}" Margin="0,0,0,12"/>
+                        <TextBlock Text="{loc:Loc CF_Group_Network}" Style="{StaticResource CaptionText}" Margin="0,0,0,12"/>
                         <ItemsControl x:Name="NetworkOpsPanel">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
@@ -64,7 +65,7 @@
 
                 <Border Style="{StaticResource Card}" Margin="0,0,0,12">
                     <StackPanel>
-                        <TextBlock Text="NAPRAWA SYSTEMU" Style="{StaticResource CaptionText}" Margin="0,0,0,12"/>
+                        <TextBlock Text="{loc:Loc CF_Group_Repair}" Style="{StaticResource CaptionText}" Margin="0,0,0,12"/>
                         <ItemsControl x:Name="RepairOpsPanel">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
@@ -85,7 +86,7 @@
 
                 <Border Style="{StaticResource Card}" Margin="0,0,0,12">
                     <StackPanel>
-                        <TextBlock Text="USŁUGI" Style="{StaticResource CaptionText}" Margin="0,0,0,12"/>
+                        <TextBlock Text="{loc:Loc CF_Group_Services}" Style="{StaticResource CaptionText}" Margin="0,0,0,12"/>
                         <ItemsControl x:Name="ServicesOpsPanel">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
@@ -106,7 +107,7 @@
 
                 <Border Style="{StaticResource Card}" Margin="0,0,0,12">
                     <StackPanel>
-                        <TextBlock Text="DYSK" Style="{StaticResource CaptionText}" Margin="0,0,0,12"/>
+                        <TextBlock Text="{loc:Loc CF_Group_Disk}" Style="{StaticResource CaptionText}" Margin="0,0,0,12"/>
                         <ItemsControl x:Name="DiskOpsPanel">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
@@ -128,7 +129,7 @@
                 <Border x:Name="ProgressPanel" Style="{StaticResource Card}"
                         Margin="0,0,0,0" Visibility="Collapsed">
                     <StackPanel>
-                        <TextBlock Text="POSTĘP" Style="{StaticResource CaptionText}" Margin="0,0,0,8"/>
+                        <TextBlock Text="{loc:Loc Progress_Title}" Style="{StaticResource CaptionText}" Margin="0,0,0,8"/>
                         <ProgressBar x:Name="ProgressBar" Value="0" Maximum="1" Height="6" Margin="0,0,0,10"/>
                         <TextBlock x:Name="CurrentOpText" Text=""
                                    Style="{StaticResource BodyText}" Margin="0,0,0,8"/>
@@ -160,12 +161,12 @@
                           Margin="0,0,16,0"
                           VerticalAlignment="Center"
                           Checked="SafeMode_Changed" Unchecked="SafeMode_Changed">
-                    <TextBlock Text="Tylko bezpieczne operacje"
+                    <TextBlock Text="{loc:Loc CF_SafeOnly}"
                                FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}"/>
                 </CheckBox>
 
                 <Button Grid.Column="1"
-                        Content="Zaznacz wszystko"
+                        Content="{loc:Loc CF_SelectAll}"
                         Style="{StaticResource SecondaryButton}"
                         Padding="12,7" FontSize="12"
                         Click="SelectAll_Click"/>
@@ -180,7 +181,7 @@
 
                 <Button Grid.Column="3"
                         x:Name="CancelButton"
-                        Content="Anuluj"
+                        Content="{loc:Loc Btn_Cancel}"
                         Style="{StaticResource SecondaryButton}"
                         Padding="12,7" Margin="0,0,8,0"
                         Visibility="Collapsed"
@@ -188,7 +189,7 @@
 
                 <Button Grid.Column="4"
                         x:Name="RunSelectedButton"
-                        Content="Uruchom wybrane"
+                        Content="{loc:Loc Btn_RunSelected}"
                         Style="{StaticResource PrimaryButton}"
                         IsEnabled="False"
                         Click="RunSelected_Click"/>

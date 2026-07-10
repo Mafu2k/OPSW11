@@ -8,20 +8,36 @@ namespace OPSW11.Services;
 
 public class SystemInfoService : IDisposable
 {
-    private readonly PerformanceCounter _cpuCounter;
+    private readonly PerformanceCounter? _cpuCounter;
     private bool _disposed;
 
     public SystemInfoService()
     {
-        _cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
-        _cpuCounter.NextValue();
+        try
+        {
+            _cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
+            _cpuCounter.NextValue();
+        }
+        catch
+        {
+            _cpuCounter = null;
+        }
     }
 
     public async Task<SystemSnapshot> GetSnapshotAsync()
     {
         await Task.Delay(500);
 
-        double cpuUsage = Math.Round(_cpuCounter.NextValue(), 1);
+        double cpuUsage = 0;
+        try
+        {
+            if (_cpuCounter is not null)
+                cpuUsage = Math.Round(_cpuCounter.NextValue(), 1);
+        }
+        catch
+        {
+            cpuUsage = 0;
+        }
 
         var (ramTotal, ramAvailable) = await Task.Run(GetMemoryInfo);
         long ramUsed = ramTotal - ramAvailable;
@@ -90,7 +106,7 @@ public class SystemInfoService : IDisposable
     public void Dispose()
     {
         if (_disposed) return;
-        _cpuCounter.Dispose();
+        _cpuCounter?.Dispose();
         _disposed = true;
     }
 }
