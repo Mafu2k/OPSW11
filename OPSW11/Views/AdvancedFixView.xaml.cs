@@ -1,6 +1,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using OPSW11.Helpers;
+using OPSW11.Localization;
 using OPSW11.Models;
 
 namespace OPSW11.Views;
@@ -17,10 +18,8 @@ public partial class AdvancedFixView : UserControl
     private async void RunButton_Click(object sender, RoutedEventArgs e)
     {
         var odpowiedz = MessageBox.Show(
-            "Zaawansowana naprawa uruchomi SFC, DISM oraz zresetuje składniki Windows Update.\n\n" +
-            "Operacja może potrwać 15–45 minut. Wymagany będzie restart komputera.\n\n" +
-            "Przed wykonaniem zostanie utworzony punkt przywracania.\n\nKontynuować?",
-            "Potwierdź naprawę zaawansowaną",
+            Loc.T("AF_ConfirmMsg"),
+            Loc.T("AF_ConfirmTitle"),
             MessageBoxButton.YesNo,
             MessageBoxImage.Warning);
 
@@ -33,16 +32,16 @@ public partial class AdvancedFixView : UserControl
         {
             var ct = _cts.Token;
 
-            CurrentOpText.Text = "Tworzenie punktu przywracania systemu…";
-            await AppServices.Backup.CreateSystemRestorePointAsync("WO11 — przed zaawansowaną naprawą");
+            CurrentOpText.Text = Loc.T("AF_CreatingRestore");
+            await AppServices.Backup.CreateSystemRestorePointAsync(Loc.T("AF_RestorePointDesc"));
 
-            await Krok("Uruchamianie SFC /scannow…",
+            await Krok(Loc.T("AF_StepSfc"),
                 ct => AppServices.Repair.RunSfcAsync(DodajOutput, ct), ct);
 
-            await Krok("Uruchamianie DISM /RestoreHealth…",
+            await Krok(Loc.T("AF_StepDism"),
                 ct => AppServices.Repair.RunDismAsync(DodajOutput, ct), ct);
 
-            await Krok("Resetowanie składników Windows Update…",
+            await Krok(Loc.T("AF_StepWu"),
                 ct => AppServices.Repair.ResetWindowsUpdateAsync(ct), ct);
 
             SetUiBusy(false);
@@ -50,7 +49,7 @@ public partial class AdvancedFixView : UserControl
         }
         catch (OperationCanceledException)
         {
-            DodajOutput("\n✕ Anulowano przez użytkownika.");
+            DodajOutput("\n" + Loc.T("AF_Cancelled"));
             SetUiBusy(false);
         }
     }
@@ -66,7 +65,7 @@ public partial class AdvancedFixView : UserControl
         DodajOutput($"\n═══ {nazwa} ═══");
 
         var wynik = await operacja(ct);
-        DodajOutput(wynik.IsSuccess ? "✓ Zakończono." : $"⚠ {wynik.Message}");
+        DodajOutput(wynik.IsSuccess ? Loc.T("AF_StepDone") : $"⚠ {wynik.Message}");
 
         OverallProgress.Value++;
     }
@@ -89,7 +88,7 @@ public partial class AdvancedFixView : UserControl
 
         if (!zajety)
         {
-            CurrentOpText.Text              = "Wszystkie operacje zakończone";
+            CurrentOpText.Text              = Loc.T("AF_AllDone");
             OverallProgress.Value           = 4;
             OverallProgress.IsIndeterminate = false;
         }
@@ -98,12 +97,12 @@ public partial class AdvancedFixView : UserControl
     private void RestartNowButton_Click(object sender, RoutedEventArgs e)
     {
         var odpowiedz = MessageBox.Show(
-            "Komputer zostanie uruchomiony ponownie. Zapisz wszystkie otwarte pliki.\n\nUruchomić ponownie?",
-            "Potwierdzenie restartu",
+            Loc.T("AF_RestartConfirmMsg"),
+            Loc.T("AF_RestartConfirmTitle"),
             MessageBoxButton.YesNo,
             MessageBoxImage.Warning);
 
         if (odpowiedz == MessageBoxResult.Yes)
-            System.Diagnostics.Process.Start(SystemPaths.Shutdown, "/r /t 5 /c \"WO11: restart po naprawie systemu.\"");
+            System.Diagnostics.Process.Start(SystemPaths.Shutdown, $"/r /t 5 /c \"{Loc.T("AF_ShutdownComment")}\"");
     }
 }

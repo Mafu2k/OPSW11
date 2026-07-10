@@ -5,7 +5,7 @@
 ![.NET](https://img.shields.io/badge/.NET-10.0-512BD4?logo=dotnet)
 ![Platform](https://img.shields.io/badge/platform-Windows%2010%2F11-0078D6?logo=windows)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
+![Version](https://img.shields.io/badge/version-1.1.0--alpha-blue)
 
 ---
 
@@ -41,7 +41,13 @@ Real-time system metrics refreshed every 2 seconds:
 
 ### 📋 Logs
 Session-level event journal with severity filtering (Info / Warning / Error / Success).  
-Log files are stored in `%APPDATA%\WO11\Logi\` and automatically rotated after 30 days.
+Log files are stored in `%APPDATA%\OPSW11\Logi\` and automatically rotated after 30 days.
+Entries can be exported to a `.log` / `.txt` file from the toolbar.
+
+### 🌐 Languages
+The whole UI is localizable and ships with **six languages** — Polish, English, German,
+Spanish, French and Ukrainian. Switch instantly from the sidebar; the choice (and the
+light/dark theme) is remembered in `%APPDATA%\OPSW11\settings.json` between sessions.
 
 ---
 
@@ -58,10 +64,12 @@ Log files are stored in `%APPDATA%\WO11\Logi\` and automatically rotated after 3
 ## Build from Source
 
 ```bash
-git clone https://github.com/Mafu2k/WO11-System-Optimizer.git
-cd WO11-System-Optimizer/OPSW11
+git clone https://github.com/Mafu2k/OPSW11.git
+cd OPSW11/OPSW11
 dotnet build OPSW11.csproj -c Release
 ```
+
+> Requires the **.NET 10 SDK** (the project targets `net10.0-windows`).
 
 ### Publish as self-contained executable
 
@@ -81,8 +89,13 @@ OPSW11/
 │   ├── AdminHelper.cs        # UAC elevation & admin check
 │   ├── AppServices.cs        # Shared service instances (DI-lite)
 │   ├── FormatHelper.cs       # Byte / uptime formatting
-│   ├── ProcessHelper.cs      # Async process runner with CancellationToken
+│   ├── ProcessHelper.cs      # Async process runner; kills the child tree on cancel
 │   └── SystemPaths.cs        # Full paths to Windows system tools (anti PATH-hijacking)
+│
+├── Localization/
+│   ├── LocalizationManager.cs # Runtime language source (live-switchable)
+│   ├── LocExtension.cs        # {loc:Loc Key} XAML markup extension
+│   └── Translations.cs        # 6-language string table
 │
 ├── Models/
 │   ├── LogEntry.cs           # Log entry model
@@ -96,7 +109,8 @@ OPSW11/
 │   ├── LoggingService.cs     # Singleton logger with 30-day file rotation
 │   ├── NetworkService.cs     # DNS flush, service restart, netsh stack reset
 │   ├── RepairService.cs      # SFC, DISM, Windows Update reset
-│   ├── ServiceManagerService.cs
+│   ├── ServiceManagerService.cs # Service startup config (validated names)
+│   ├── SettingsService.cs    # Persisted language + theme preferences
 │   └── SystemInfoService.cs  # Real-time CPU / RAM / disk metrics via Win32
 │
 └── Views/
@@ -113,6 +127,9 @@ OPSW11/
 
 - All system tools are referenced by **full absolute path** (`System32\sc.exe`, `System32\net.exe`, etc.) to eliminate PATH-hijacking risk.
 - Drive letter input is validated (`char.IsAsciiLetter`) before being interpolated into process arguments.
+- Service names are validated against a strict allowlist regex before being passed to `sc.exe`, preventing command-line argument injection.
+- Cancelling a long-running repair **kills the entire child process tree** (`Process.Kill(entireProcessTree: true)`) so no elevated helper (SFC/DISM/defrag/netsh) is left orphaned.
+- The `SHEmptyRecycleBin` P/Invoke is pinned to the Unicode entry point with `SetLastError`.
 - The application requires administrator privileges and declares this in `app.manifest` — it will not silently downgrade.
 - `BackupService` creates a **VSS restore point** before every destructive operation.
 

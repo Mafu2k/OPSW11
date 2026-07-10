@@ -16,7 +16,7 @@ public class BackupService
         _logger = logger;
         _backupDirectory = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            "WO11", "Backups");
+            "OPSW11", "Backups");
 
         try
         {

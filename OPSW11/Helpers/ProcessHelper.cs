@@ -29,9 +29,10 @@ public static class ProcessHelper
             StandardErrorEncoding = oemEncoding
         };
 
+        Process? process = null;
         try
         {
-            using var process = new Process { StartInfo = startInfo, EnableRaisingEvents = true };
+            process = new Process { StartInfo = startInfo, EnableRaisingEvents = true };
 
             process.OutputDataReceived += (_, e) =>
             {
@@ -60,11 +61,31 @@ public static class ProcessHelper
         }
         catch (OperationCanceledException)
         {
+            // The token was cancelled while waiting — make sure the child process
+            // (SFC / DISM / defrag / netsh) is actually terminated instead of orphaned.
+            TryKillProcessTree(process);
             return OperationResult.Failure("Operation was cancelled by the user.");
         }
         catch (Exception ex)
         {
             return OperationResult.Failure($"Failed to start '{executable}': {ex.Message}", ex);
+        }
+        finally
+        {
+            process?.Dispose();
+        }
+    }
+
+    private static void TryKillProcessTree(Process? process)
+    {
+        try
+        {
+            if (process is { HasExited: false })
+                process.Kill(entireProcessTree: true);
+        }
+        catch
+        {
+            // Process may have already exited or be inaccessible — nothing else to do.
         }
     }
 }

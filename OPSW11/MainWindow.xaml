@@ -2,6 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:views="clr-namespace:OPSW11.Views"
+        xmlns:loc="clr-namespace:OPSW11.Localization"
         mc:Ignorable="d"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -37,7 +38,7 @@
                                        FontSize="17" FontWeight="Bold"
                                        Foreground="{DynamicResource TextPrimaryBrush}"
                                        FontFamily="Segoe UI Variable Display, Segoe UI, Arial"/>
-                            <TextBlock Text="System Optimizer"
+                            <TextBlock Text="{loc:Loc App_Subtitle}"
                                        FontSize="10"
                                        Foreground="{DynamicResource TextMutedBrush}"/>
                         </StackPanel>
@@ -65,7 +66,7 @@
                             <TextBlock Text="&#xE80F;" FontFamily="Segoe MDL2 Assets"
                                        FontSize="14" Width="18" VerticalAlignment="Center"
                                        HorizontalAlignment="Center"/>
-                            <TextBlock Text="Panel główny" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="{loc:Loc Nav_Dashboard}" Margin="10,0,0,0" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
                     <Button x:Name="BtnQuickFix" Tag="QuickFix" Click="NavButton_Click"
@@ -74,7 +75,7 @@
                             <TextBlock Text="&#xE8B7;" FontFamily="Segoe MDL2 Assets"
                                        FontSize="14" Width="18" VerticalAlignment="Center"
                                        HorizontalAlignment="Center"/>
-                            <TextBlock Text="Szybka naprawa" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="{loc:Loc Nav_QuickFix}" Margin="10,0,0,0" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
                     <Button x:Name="BtnAdvancedFix" Tag="AdvancedFix" Click="NavButton_Click"
@@ -83,7 +84,7 @@
                             <TextBlock Text="&#xE90F;" FontFamily="Segoe MDL2 Assets"
                                        FontSize="14" Width="18" VerticalAlignment="Center"
                                        HorizontalAlignment="Center"/>
-                            <TextBlock Text="Zaawansowana" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="{loc:Loc Nav_AdvancedFix}" Margin="10,0,0,0" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
                     <Button x:Name="BtnCustomFix" Tag="CustomFix" Click="NavButton_Click"
@@ -92,7 +93,7 @@
                             <TextBlock Text="&#xE713;" FontFamily="Segoe MDL2 Assets"
                                        FontSize="14" Width="18" VerticalAlignment="Center"
                                        HorizontalAlignment="Center"/>
-                            <TextBlock Text="Naprawa własna" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="{loc:Loc Nav_CustomFix}" Margin="10,0,0,0" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
                     <Button x:Name="BtnLogs" Tag="Logs" Click="NavButton_Click"
@@ -101,7 +102,7 @@
                             <TextBlock Text="&#xE8A9;" FontFamily="Segoe MDL2 Assets"
                                        FontSize="14" Width="18" VerticalAlignment="Center"
                                        HorizontalAlignment="Center"/>
-                            <TextBlock Text="Dziennik" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="{loc:Loc Nav_Logs}" Margin="10,0,0,0" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
                 </StackPanel>
@@ -112,6 +113,12 @@
                 <!-- Bottom controls -->
                 <StackPanel DockPanel.Dock="Bottom" Margin="14,0,14,16">
                     <Separator Margin="0,0,0,10"/>
+
+                    <!-- Language switcher -->
+                    <TextBlock Text="{loc:Loc Lang_Label}" Style="{StaticResource CaptionText}"
+                               Margin="2,0,0,6"/>
+                    <WrapPanel x:Name="LangPanel" Margin="0,0,0,10"/>
+
                     <!-- Theme toggle -->
                     <Button x:Name="ThemeToggleButton"
                             Content="☀  Jasny motyw"
@@ -120,7 +127,7 @@
                             HorizontalAlignment="Stretch"
                             Margin="0,0,0,8"
                             Click="ThemeToggle_Click"/>
-                    <TextBlock Text="OPSW11  v1.0"
+                    <TextBlock Text="OPSW11  v1.1"
                                FontSize="11" Foreground="{DynamicResource TextMutedBrush}"
                                Margin="2,0,0,0"/>
                 </StackPanel>
@@ -156,7 +163,7 @@
                              VerticalAlignment="Center" Margin="0,0,8,0"/>
                     <TextBlock Grid.Column="1"
                                x:Name="StatusBarMessage"
-                               Text="Gotowy"
+                               Text="{loc:Loc Status_Ready}"
                                FontSize="11"
                                Foreground="{DynamicResource TextMutedBrush}"
                                VerticalAlignment="Center"/>

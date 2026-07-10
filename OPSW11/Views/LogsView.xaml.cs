@@ -1,8 +1,11 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using Microsoft.Win32;
+using OPSW11.Localization;
 using OPSW11.Models;
 using OPSW11.Services;
 
@@ -68,7 +71,7 @@ public partial class LogsView : UserControl
 
     private void AktualizujLicznik()
     {
-        LogCountText.Text = $"{LogListBox.Items.Count} wpisów";
+        LogCountText.Text = Loc.F("Log_Count", LogListBox.Items.Count);
     }
 
     private void OpenLogFile_Click(object sender, RoutedEventArgs e)
@@ -79,16 +82,51 @@ public partial class LogsView : UserControl
         }
         else
         {
-            MessageBox.Show("Plik dziennika nie został jeszcze utworzony.", "Dziennik",
+            MessageBox.Show(Loc.T("Log_NotCreated"), Loc.T("Log_DialogTitle"),
                 MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+    }
+
+    private void ExportLogs_Click(object sender, RoutedEventArgs e)
+    {
+        if (_logger.Entries.Count == 0)
+        {
+            MessageBox.Show(Loc.T("Log_ExportEmpty"), Loc.T("Log_ExportTitle"),
+                MessageBoxButton.OK, MessageBoxImage.Information);
+            return;
+        }
+
+        var dialog = new SaveFileDialog
+        {
+            Title    = Loc.T("Log_ExportTitle"),
+            Filter   = "Log files (*.log)|*.log|Text files (*.txt)|*.txt|All files (*.*)|*.*",
+            FileName = $"OPSW11_{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.log"
+        };
+
+        if (dialog.ShowDialog() != true) return;
+
+        try
+        {
+            var sb = new StringBuilder();
+            foreach (var wpis in _logger.Entries)
+                sb.AppendLine($"[{wpis.Timestamp:HH:mm:ss}] [{wpis.LevelTag,-7}] {wpis.Message}");
+
+            File.WriteAllText(dialog.FileName, sb.ToString());
+
+            MessageBox.Show(Loc.F("Log_ExportDone", dialog.FileName), Loc.T("Log_ExportTitle"),
+                MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Export: {ex.Message}");
         }
     }
 
     private void ClearLogs_Click(object sender, RoutedEventArgs e)
     {
         var odpowiedz = MessageBox.Show(
-            "Wyczyścić wszystkie wpisy z bieżącej sesji?",
-            "Wyczyść dziennik",
+            Loc.T("Log_ClearConfirm"),
+            Loc.T("Log_ClearTitle"),
             MessageBoxButton.YesNo,
             MessageBoxImage.Question);
 

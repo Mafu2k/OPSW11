@@ -150,6 +150,6 @@ public class CleanupService
         catch { }
     }
 
-    [DllImport("Shell32.dll")]
+    [DllImport("Shell32.dll", CharSet = CharSet.Unicode, EntryPoint = "SHEmptyRecycleBinW", SetLastError = true)]
     private static extern int SHEmptyRecycleBin(IntPtr hwnd, string? pszRootPath, uint dwFlags);
 }

@@ -5,6 +5,24 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [1.1.0-alpha] — 2026-07-10
+
+### Added
+- **Multi-language UI** — full localization with six languages (Polish, English, German, Spanish, French, Ukrainian). Language switches live from the sidebar via a lightweight `{loc:Loc Key}` markup extension bound to a `LocalizationManager` singleton.
+- **Persisted preferences** — selected language and light/dark theme are saved to `%APPDATA%\OPSW11\settings.json` and restored on next launch (`SettingsService`).
+- **Log export** — the Logs view can export the current session journal to a `.log` / `.txt` file.
+
+### Security Hardening
+- Service names are validated against a strict allowlist regex (`^[A-Za-z0-9_.\-]{1,256}$`) before being interpolated into an `sc.exe` argument — closes an argument-injection vector.
+- `SHEmptyRecycleBin` P/Invoke pinned to the Unicode entry point (`SHEmptyRecycleBinW`) with `SetLastError`.
+
+### Fixed
+- **Cancellation now actually stops work** — `ProcessHelper` kills the child process tree on cancel, so SFC/DISM/defrag/netsh are no longer left running in the background after "Anuluj".
+- `SystemInfoService` no longer crashes the dashboard when the CPU performance counter is unavailable — it degrades to a 0% reading.
+- Unified the app-data folder name from the legacy `WO11` to `OPSW11` (logs, backups, settings).
+
+---
+
 ## [1.0.0] — 2026-04-20
 
 ### Added

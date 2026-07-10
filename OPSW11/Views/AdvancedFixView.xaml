@@ -3,15 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:loc="clr-namespace:OPSW11.Localization"
              mc:Ignorable="d"
              d:DesignHeight="720" d:DesignWidth="1000">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto" Background="Transparent">
         <StackPanel Margin="32,28,32,28">
 
-            <TextBlock Text="Zaawansowana naprawa"
+            <TextBlock Text="{loc:Loc AF_Title}"
                        Style="{StaticResource HeadingXL}" Margin="0,0,0,4"/>
-            <TextBlock Text="Uruchamia SFC, DISM i resetuje składniki Windows Update."
+            <TextBlock Text="{loc:Loc AF_Subtitle}"
                        Style="{StaticResource BodyText}" Margin="0,0,0,16"/>
 
             <Border Background="{DynamicResource WarnBannerBg}"
@@ -23,10 +24,10 @@
                                FontSize="18" Foreground="{DynamicResource WarningBrush}"
                                Margin="0,0,12,0" VerticalAlignment="Center"/>
                     <StackPanel>
-                        <TextBlock Text="Wymagany restart po zakończeniu"
+                        <TextBlock Text="{loc:Loc AF_RestartWarnTitle}"
                                    FontSize="13" FontWeight="SemiBold"
                                    Foreground="{DynamicResource WarningBrush}"/>
-                        <TextBlock Text="Zapisz wszystkie otwarte pliki przed uruchomieniem tej operacji."
+                        <TextBlock Text="{loc:Loc AF_RestartWarnDesc}"
                                    FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,3,0,0"/>
                     </StackPanel>
                 </StackPanel>
@@ -34,7 +35,7 @@
 
             <Border Style="{StaticResource Card}" Margin="0,0,0,16">
                 <StackPanel>
-                    <TextBlock Text="OPERACJE" Style="{StaticResource CaptionText}" Margin="0,0,0,14"/>
+                    <TextBlock Text="{loc:Loc AF_Operations}" Style="{StaticResource CaptionText}" Margin="0,0,0,14"/>
 
                     <Grid Margin="0,0,0,10">
                         <Grid.ColumnDefinitions>
@@ -48,9 +49,9 @@
                                        HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <StackPanel Grid.Column="1" Margin="12,0,0,0">
-                            <TextBlock Text="SFC /scannow — Sprawdzenie plików systemowych"
+                            <TextBlock Text="{loc:Loc AF_Sfc_Title}"
                                        Style="{StaticResource HeadingM}" Margin="0,0,0,3"/>
-                            <TextBlock Text="Skanuje i naprawia uszkodzone pliki chronionych zasobów systemu Windows."
+                            <TextBlock Text="{loc:Loc AF_Sfc_Desc}"
                                        Style="{StaticResource BodyText}" FontSize="12"/>
                         </StackPanel>
                     </Grid>
@@ -67,9 +68,9 @@
                                        HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <StackPanel Grid.Column="1" Margin="12,0,0,0">
-                            <TextBlock Text="DISM /RestoreHealth — Naprawa obrazu systemu"
+                            <TextBlock Text="{loc:Loc AF_Dism_Title}"
                                        Style="{StaticResource HeadingM}" Margin="0,0,0,3"/>
-                            <TextBlock Text="Sprawdza i przywraca magazyn komponentów systemu Windows."
+                            <TextBlock Text="{loc:Loc AF_Dism_Desc}"
                                        Style="{StaticResource BodyText}" FontSize="12"/>
                         </StackPanel>
                     </Grid>
@@ -86,9 +87,9 @@
                                        HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <StackPanel Grid.Column="1" Margin="12,0,0,0">
-                            <TextBlock Text="Reset składników Windows Update"
+                            <TextBlock Text="{loc:Loc AF_Wu_Title}"
                                        Style="{StaticResource HeadingM}" Margin="0,0,0,3"/>
-                            <TextBlock Text="Zatrzymuje usługi WU, czyści cache SoftwareDistribution i rejestruje DLL-e."
+                            <TextBlock Text="{loc:Loc AF_Wu_Desc}"
                                        Style="{StaticResource BodyText}" FontSize="12"/>
                         </StackPanel>
                     </Grid>
@@ -105,9 +106,9 @@
                                        HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <StackPanel Grid.Column="1" Margin="12,0,0,0">
-                            <TextBlock Text="Reset stosu sieciowego (netsh)"
+                            <TextBlock Text="{loc:Loc AF_Net_Title}"
                                        Style="{StaticResource HeadingM}" Margin="0,0,0,3"/>
-                            <TextBlock Text="Resetuje stos TCP/IP i ustawienia Winsock."
+                            <TextBlock Text="{loc:Loc AF_Net_Desc}"
                                        Style="{StaticResource BodyText}" FontSize="12"/>
                         </StackPanel>
                     </Grid>
@@ -115,7 +116,7 @@
             </Border>
 
             <Border Style="{StaticResource CardCompact}" Margin="0,0,0,16">
-                <TextBlock Text="Skanowanie SFC i DISM może potrwać 15–45 minut w zależności od rozmiaru dysku."
+                <TextBlock Text="{loc:Loc AF_Duration}"
                            Style="{StaticResource BodyText}" FontSize="12"/>
             </Border>
 
@@ -127,13 +128,13 @@
                     <TextBlock Text="&#xE83D;" FontFamily="Segoe MDL2 Assets"
                                FontSize="15" Foreground="{DynamicResource SuccessBrush}"
                                Margin="0,0,12,0" VerticalAlignment="Center"/>
-                    <TextBlock Text="Przed uruchomieniem zostanie automatycznie utworzony punkt przywracania systemu."
+                    <TextBlock Text="{loc:Loc AF_RestorePointNote}"
                                Style="{StaticResource BodyText}" VerticalAlignment="Center"/>
                 </StackPanel>
             </Border>
 
             <Button x:Name="CancelButton"
-                    Content="Anuluj"
+                    Content="{loc:Loc Btn_Cancel}"
                     Style="{StaticResource SecondaryButton}"
                     Padding="0,14" FontSize="14"
                     HorizontalAlignment="Stretch"
@@ -142,7 +143,7 @@
                     Click="CancelButton_Click"/>
 
             <Button x:Name="RunButton"
-                    Content="URUCHOM ZAAWANSOWANĄ NAPRAWĘ"
+                    Content="{loc:Loc AF_RunButton}"
                     Style="{StaticResource PrimaryButton}"
                     FontSize="14" Padding="0,14"
                     HorizontalAlignment="Stretch"
@@ -151,11 +152,11 @@
             <Border x:Name="ProgressPanel" Style="{StaticResource Card}"
                     Margin="0,16,0,0" Visibility="Collapsed">
                 <StackPanel>
-                    <TextBlock Text="POSTĘP" Style="{StaticResource CaptionText}" Margin="0,0,0,8"/>
+                    <TextBlock Text="{loc:Loc Progress_Title}" Style="{StaticResource CaptionText}" Margin="0,0,0,8"/>
                     <ProgressBar x:Name="OverallProgress" Value="0" Maximum="4" Height="6" Margin="0,0,0,12"/>
                     <TextBlock x:Name="CurrentOpText" Text=""
                                Style="{StaticResource BodyText}" Margin="0,0,0,8"/>
-                    <TextBlock Text="WYNIK NA ŻYWO" Style="{StaticResource CaptionText}" Margin="0,0,0,6"/>
+                    <TextBlock Text="{loc:Loc AF_LiveOutput}" Style="{StaticResource CaptionText}" Margin="0,0,0,6"/>
                     <Border Background="{DynamicResource InputBackground}"
                             CornerRadius="7" Padding="12" MaxHeight="220">
                         <ScrollViewer x:Name="OutputScroll" VerticalScrollBarVisibility="Auto">
@@ -181,13 +182,13 @@
                         <TextBlock Text="&#xE8B7;" FontFamily="Segoe MDL2 Assets"
                                    FontSize="16" Foreground="{DynamicResource WarningBrush}"
                                    Margin="0,0,12,0" VerticalAlignment="Center"/>
-                        <TextBlock Text="Operacje zakończone — uruchom ponownie komputer, aby zastosować zmiany."
+                        <TextBlock Text="{loc:Loc AF_RestartBanner}"
                                    Foreground="{DynamicResource WarningBrush}"
                                    FontSize="13" FontWeight="SemiBold" VerticalAlignment="Center"/>
                     </StackPanel>
                     <Button Grid.Column="1"
                             x:Name="RestartButton"
-                            Content="Uruchom ponownie"
+                            Content="{loc:Loc Btn_RestartNow}"
                             Style="{StaticResource DangerButton}"
                             Padding="14,8" Margin="12,0,0,0"
                             Click="RestartNowButton_Click"/>

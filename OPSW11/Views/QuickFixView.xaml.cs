@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using OPSW11.Helpers;
+using OPSW11.Localization;
 using OPSW11.Models;
 
 namespace OPSW11.Views;
@@ -21,8 +22,8 @@ public partial class QuickFixView : UserControl
     private async void RunButton_Click(object sender, RoutedEventArgs e)
     {
         var odpowiedz = MessageBox.Show(
-            "Szybka naprawa wyczyści pliki tymczasowe, Prefetch, opróżni cache DNS i wyczyści pamięć podręczną Windows Update.\n\nKontynuować?",
-            "Potwierdź szybką naprawę",
+            Loc.T("QF_ConfirmMsg"),
+            Loc.T("QF_ConfirmTitle"),
             MessageBoxButton.YesNo,
             MessageBoxImage.Question);
 
@@ -36,16 +37,16 @@ public partial class QuickFixView : UserControl
         try
         {
             var ct = _cts.Token;
-            await Krok("Czyszczenie plików tymczasowych użytkownika...", ct => AppServices.Cleanup.CleanUserTempFilesAsync(), ct);
-            await Krok("Czyszczenie Windows\\Temp...",                    ct => AppServices.Cleanup.CleanWindowsTempFilesAsync(), ct);
-            await Krok("Czyszczenie Prefetch...",                          ct => AppServices.Cleanup.CleanPrefetchAsync(), ct);
-            await Krok("Reset cache DNS...",                               ct => AppServices.Network.FlushDnsAsync(ct), ct);
-            await Krok("Czyszczenie cache Windows Update...",             ct => AppServices.Cleanup.CleanWindowsUpdateCacheAsync(), ct);
+            await Krok(Loc.T("QF_StepUserTemp"), ct => AppServices.Cleanup.CleanUserTempFilesAsync(), ct);
+            await Krok(Loc.T("QF_StepWinTemp"),  ct => AppServices.Cleanup.CleanWindowsTempFilesAsync(), ct);
+            await Krok(Loc.T("QF_StepPrefetch"), ct => AppServices.Cleanup.CleanPrefetchAsync(), ct);
+            await Krok(Loc.T("QF_StepDns"),      ct => AppServices.Network.FlushDnsAsync(ct), ct);
+            await Krok(Loc.T("QF_StepWu"),       ct => AppServices.Cleanup.CleanWindowsUpdateCacheAsync(), ct);
         }
         catch (OperationCanceledException)
         {
-            CurrentOperationText.Text = "Anulowano przez użytkownika.";
-            _statusItems.Add("✕ Operacja anulowana.");
+            CurrentOperationText.Text = Loc.T("QF_Cancelled");
+            _statusItems.Add(Loc.T("QF_CancelledItem"));
         }
 
         SetUiBusy(false);
@@ -87,8 +88,8 @@ public partial class QuickFixView : UserControl
         {
             OverallProgress.IsIndeterminate = false;
             CurrentOperationText.Text = _wszystkoSzlo
-                ? "Szybka naprawa zakończona pomyślnie."
-                : "Zakończono z ostrzeżeniami — sprawdź wyniki powyżej.";
+                ? Loc.T("QF_DoneOk")
+                : Loc.T("QF_DoneWarn");
         }
     }
 }

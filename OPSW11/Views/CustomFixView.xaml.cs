@@ -1,6 +1,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using OPSW11.Helpers;
+using OPSW11.Localization;
 using OPSW11.Models;
 using OPSW11.Services;
 
@@ -19,6 +20,20 @@ public partial class CustomFixView : UserControl
         ZbudujListeOperacji();
         OdswiezListy();
         AktualizujLicznik();
+
+        LocalizationManager.Instance.LanguageChanged += OnLanguageChanged;
+        Unloaded += (_, _) => LocalizationManager.Instance.LanguageChanged -= OnLanguageChanged;
+    }
+
+    private void OnLanguageChanged()
+    {
+        var stany = _operacje.Select(o => o.IsSelected).ToList();
+        ZbudujListeOperacji();
+        for (int i = 0; i < _operacje.Count && i < stany.Count; i++)
+            _operacje[i].IsSelected = stany[i];
+
+        OdswiezListy();
+        AktualizujLicznik();
     }
 
     private void ZbudujListeOperacji()
@@ -27,64 +42,64 @@ public partial class CustomFixView : UserControl
         [
             new SelectableOperation
             {
-                Name        = "Wyczyść %TEMP% (pliki użytkownika)",
-                Description = "Usuwa zawartość %TEMP%. Pliki w użyciu są pomijane.",
+                Name        = Loc.T("Op_UserTemp_Name"),
+                Description = Loc.T("Op_UserTemp_Desc"),
                 GroupName   = "Cleanup",
                 IsSafe      = true,
                 Execute     = _ => AppServices.Cleanup.CleanUserTempFilesAsync()
             },
             new SelectableOperation
             {
-                Name        = "Wyczyść C:\\Windows\\Temp",
-                Description = "Usuwa tymczasowe pliki systemowe. Zablokowane pomijane.",
+                Name        = Loc.T("Op_WinTemp_Name"),
+                Description = Loc.T("Op_WinTemp_Desc"),
                 GroupName   = "Cleanup",
                 IsSafe      = true,
                 Execute     = _ => AppServices.Cleanup.CleanWindowsTempFilesAsync()
             },
             new SelectableOperation
             {
-                Name        = "Wyczyść Prefetch",
-                Description = "Usuwa pliki .pf — zostaną odtworzone przy następnym użyciu.",
+                Name        = Loc.T("Op_Prefetch_Name"),
+                Description = Loc.T("Op_Prefetch_Desc"),
                 GroupName   = "Cleanup",
                 IsSafe      = true,
                 Execute     = _ => AppServices.Cleanup.CleanPrefetchAsync()
             },
             new SelectableOperation
             {
-                Name        = "Opróżnij Kosz",
-                Description = "Trwale usuwa wszystkie elementy z Kosza.",
+                Name        = Loc.T("Op_RecycleBin_Name"),
+                Description = Loc.T("Op_RecycleBin_Desc"),
                 GroupName   = "Cleanup",
                 IsSafe      = true,
                 Execute     = _ => AppServices.Cleanup.CleanRecycleBinAsync()
             },
             new SelectableOperation
             {
-                Name        = "Cache Windows Update",
-                Description = "Zatrzymuje usługi WU i usuwa pobrane pliki aktualizacji.",
+                Name        = Loc.T("Op_WuCache_Name"),
+                Description = Loc.T("Op_WuCache_Desc"),
                 GroupName   = "Cleanup",
                 IsSafe      = true,
                 Execute     = _ => AppServices.Cleanup.CleanWindowsUpdateCacheAsync()
             },
             new SelectableOperation
             {
-                Name        = "Reset cache DNS",
-                Description = "Uruchamia ipconfig /flushdns. Naprawia błędne rozwiązania DNS.",
+                Name        = Loc.T("Op_Dns_Name"),
+                Description = Loc.T("Op_Dns_Desc"),
                 GroupName   = "Network",
                 IsSafe      = true,
                 Execute     = ct => AppServices.Network.FlushDnsAsync(ct)
             },
             new SelectableOperation
             {
-                Name        = "Restart usług sieciowych",
-                Description = "Restartuje DHCP, DNS Client, NLA i Network Profile Manager.",
+                Name        = Loc.T("Op_NetRestart_Name"),
+                Description = Loc.T("Op_NetRestart_Desc"),
                 GroupName   = "Network",
                 IsSafe      = true,
                 Execute     = ct => AppServices.Network.RestartNetworkServicesAsync(ct)
             },
             new SelectableOperation
             {
-                Name        = "Pełny reset stosu sieciowego (netsh)",
-                Description = "Resetuje Winsock i TCP/IP. Wymagany restart.",
+                Name        = Loc.T("Op_NetReset_Name"),
+                Description = Loc.T("Op_NetReset_Desc"),
                 GroupName   = "Network",
                 IsSafe      = false,
                 IsSelected  = false,
@@ -92,8 +107,8 @@ public partial class CustomFixView : UserControl
             },
             new SelectableOperation
             {
-                Name        = "SFC /scannow — Sprawdzenie plików systemowych",
-                Description = "Skanuje i naprawia uszkodzone pliki Windows. Trwa 10–30 minut.",
+                Name        = Loc.T("Op_Sfc_Name"),
+                Description = Loc.T("Op_Sfc_Desc"),
                 GroupName   = "Repair",
                 IsSafe      = true,
                 IsSelected  = false,
@@ -101,8 +116,8 @@ public partial class CustomFixView : UserControl
             },
             new SelectableOperation
             {
-                Name        = "DISM /RestoreHealth",
-                Description = "Naprawia magazyn składników Windows. 15–45 minut.",
+                Name        = Loc.T("Op_Dism_Name"),
+                Description = Loc.T("Op_Dism_Desc"),
                 GroupName   = "Repair",
                 IsSafe      = true,
                 IsSelected  = false,
@@ -110,8 +125,8 @@ public partial class CustomFixView : UserControl
             },
             new SelectableOperation
             {
-                Name        = "Reset składników Windows Update",
-                Description = "Zatrzymuje WU, czyści SoftwareDistribution i catroot2.",
+                Name        = Loc.T("Op_WuReset_Name"),
+                Description = Loc.T("Op_WuReset_Desc"),
                 GroupName   = "Repair",
                 IsSafe      = false,
                 IsSelected  = false,
@@ -119,8 +134,8 @@ public partial class CustomFixView : UserControl
             },
             new SelectableOperation
             {
-                Name        = "Wyłącz SysMain (Superfetch)",
-                Description = "Ustawia SysMain na Ręczny. Zmniejsza zużycie RAM — zalecane na SSD.",
+                Name        = Loc.T("Op_SysMain_Name"),
+                Description = Loc.T("Op_SysMain_Desc"),
                 GroupName   = "Services",
                 IsSafe      = false,
                 IsSelected  = false,
@@ -128,8 +143,8 @@ public partial class CustomFixView : UserControl
             },
             new SelectableOperation
             {
-                Name        = "Wyłącz indeksowanie Windows Search",
-                Description = "Ustawia WSearch na Ręczny. Zmniejsza I/O.",
+                Name        = Loc.T("Op_Search_Name"),
+                Description = Loc.T("Op_Search_Desc"),
                 GroupName   = "Services",
                 IsSafe      = false,
                 IsSelected  = false,
@@ -137,8 +152,8 @@ public partial class CustomFixView : UserControl
             },
             new SelectableOperation
             {
-                Name        = "Wyłącz telemetrię (DiagTrack)",
-                Description = "Ustawia DiagTrack na Ręczny. Prywatność i oszczędność CPU.",
+                Name        = Loc.T("Op_Telemetry_Name"),
+                Description = Loc.T("Op_Telemetry_Desc"),
                 GroupName   = "Services",
                 IsSafe      = false,
                 IsSelected  = false,
@@ -146,8 +161,8 @@ public partial class CustomFixView : UserControl
             },
             new SelectableOperation
             {
-                Name        = "Optymalizuj dysk systemowy (C:)",
-                Description = "Wykrywa SSD/HDD i uruchamia TRIM (SSD) lub defragmentację (HDD).",
+                Name        = Loc.T("Op_OptimizeDisk_Name"),
+                Description = Loc.T("Op_OptimizeDisk_Desc"),
                 GroupName   = "Disk",
                 IsSafe      = true,
                 IsSelected  = false,
@@ -179,7 +194,7 @@ public partial class CustomFixView : UserControl
     private void AktualizujLicznik()
     {
         int ile = _operacje.Count(o => o.IsSelected);
-        SelectionCountText.Text     = $"{ile} operacji wybranych";
+        SelectionCountText.Text     = Loc.F("CF_Count", ile);
         RunSelectedButton.IsEnabled = ile > 0;
     }
 
@@ -212,13 +227,11 @@ public partial class CustomFixView : UserControl
         var wybrane = _operacje.Where(o => o.IsSelected && o.Execute != null).ToList();
 
         bool saNiebezpieczne = wybrane.Any(o => !o.IsSafe);
-        string notatka = saNiebezpieczne
-            ? "\n\n⚠ Niektóre wybrane operacje mogą być destrukcyjne."
-            : string.Empty;
+        string notatka = saNiebezpieczne ? Loc.T("CF_DangerNote") : string.Empty;
 
         var odpowiedz = MessageBox.Show(
-            $"Zostanie uruchomionych {wybrane.Count} operacji.{notatka}\n\nKontynuować?",
-            "Potwierdź naprawę własną",
+            Loc.F("CF_ConfirmMsg", wybrane.Count, notatka),
+            Loc.T("CF_ConfirmTitle"),
             MessageBoxButton.YesNo,
             MessageBoxImage.Question);
 
@@ -228,14 +241,14 @@ public partial class CustomFixView : UserControl
         var ct = _cts.Token;
         SetUiBusy(true);
 
-        await AppServices.Backup.CreateSystemRestorePointAsync("WO11 — przed naprawą własną");
+        await AppServices.Backup.CreateSystemRestorePointAsync(Loc.T("CF_RestorePointDesc"));
 
         int done = 0;
         foreach (var op in wybrane)
         {
             if (ct.IsCancellationRequested) break;
 
-            CurrentOpText.Text = $"Uruchamianie: {op.Name}";
+            CurrentOpText.Text = Loc.F("CF_Running", op.Name);
             ProgressBar.Value  = (double)done / wybrane.Count;
 
             try
@@ -247,13 +260,13 @@ public partial class CustomFixView : UserControl
             }
             catch (OperationCanceledException)
             {
-                ResultText.Text += $"✕ {op.Name} — anulowano\n";
+                ResultText.Text += $"✕ {op.Name} — {Loc.T("CF_Cancelled")}\n";
                 break;
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Błąd w '{op.Name}': {ex.Message}");
-                ResultText.Text += $"✗ {op.Name} — błąd: {ex.Message}\n";
+                _logger.LogError($"{op.Name}: {ex.Message}");
+                ResultText.Text += $"✗ {op.Name} — {Loc.T("CF_ErrorPrefix")}: {ex.Message}\n";
             }
 
             done++;
@@ -271,7 +284,7 @@ public partial class CustomFixView : UserControl
 
         if (!zajety)
         {
-            CurrentOpText.Text          = "Zakończono";
+            CurrentOpText.Text          = Loc.T("CF_Done");
             ProgressBar.IsIndeterminate = false;
             ProgressBar.Value           = 1;
             AktualizujLicznik();

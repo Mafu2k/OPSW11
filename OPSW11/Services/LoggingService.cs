@@ -20,7 +20,7 @@ public class LoggingService
     {
         string folder = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            "WO11", "Logi");
+            "OPSW11", "Logi");
 
         Directory.CreateDirectory(folder);
         _logFile = Path.Combine(folder, $"{DateTime.Now:yyyy-MM-dd}.log");

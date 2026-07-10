@@ -8,20 +8,39 @@ namespace OPSW11.Services;
 
 public class SystemInfoService : IDisposable
 {
-    private readonly PerformanceCounter _cpuCounter;
+    private readonly PerformanceCounter? _cpuCounter;
     private bool _disposed;
 
     public SystemInfoService()
     {
-        _cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
-        _cpuCounter.NextValue();
+        // Performance counters can be disabled or corrupted on some machines.
+        // Fail soft: if the counter can't be created the CPU metric reports 0
+        // instead of taking the whole dashboard down.
+        try
+        {
+            _cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
+            _cpuCounter.NextValue();
+        }
+        catch
+        {
+            _cpuCounter = null;
+        }
     }
 
     public async Task<SystemSnapshot> GetSnapshotAsync()
     {
         await Task.Delay(500);
 
-        double cpuUsage = Math.Round(_cpuCounter.NextValue(), 1);
+        double cpuUsage = 0;
+        try
+        {
+            if (_cpuCounter is not null)
+                cpuUsage = Math.Round(_cpuCounter.NextValue(), 1);
+        }
+        catch
+        {
+            cpuUsage = 0;
+        }
 
         var (ramTotal, ramAvailable) = await Task.Run(GetMemoryInfo);
         long ramUsed = ramTotal - ramAvailable;
@@ -90,7 +109,7 @@ public class SystemInfoService : IDisposable
     public void Dispose()
     {
         if (_disposed) return;
-        _cpuCounter.Dispose();
+        _cpuCounter?.Dispose();
         _disposed = true;
     }
 }
