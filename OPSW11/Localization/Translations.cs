@@ -35,7 +35,7 @@ internal static class Translations
 
     private static readonly Dictionary<string, Dictionary<string, string>> Table = new()
     {
-        // ─────────────── Global / MainWindow ───────────────
+        // Global / MainWindow
         ["App_Subtitle"] = E(
             "Optymalizator systemu", "System Optimizer", "System-Optimierer",
             "Optimizador del sistema", "Optimiseur système", "Оптимізатор системи"),
@@ -52,7 +52,7 @@ internal static class Translations
         ["Status_Ready"] = E("Gotowy", "Ready", "Bereit", "Listo", "Prêt", "Готово"),
         ["Status_View"] = E("Widok: {0}", "View: {0}", "Ansicht: {0}", "Vista: {0}", "Vue : {0}", "Вигляд: {0}"),
 
-        // ─────────────── Dashboard ───────────────
+        // Dashboard
         ["Dash_Title"] = E("Panel główny", "Dashboard", "Übersicht", "Panel principal", "Tableau de bord", "Головна панель"),
         ["Dash_Loading"] = E("Pobieranie danych systemowych...", "Loading system data...", "Systemdaten werden geladen...", "Cargando datos del sistema...", "Chargement des données système...", "Завантаження даних системи..."),
         ["Dash_Computer"] = E("KOMPUTER", "COMPUTER", "COMPUTER", "EQUIPO", "ORDINATEUR", "КОМП'ЮТЕР"),
@@ -72,11 +72,11 @@ internal static class Translations
             "Utilisez la barre latérale pour lancer une réparation : Rapide, Avancée ou options personnalisées.",
             "Скористайтеся бічною панеллю, щоб запустити виправлення: Швидке, Розширене або власні параметри."),
 
-        // ─────────────── Shared ───────────────
+        // Shared
         ["Progress_Title"] = E("POSTĘP", "PROGRESS", "FORTSCHRITT", "PROGRESO", "PROGRESSION", "ПРОГРЕС"),
         ["Btn_Cancel"] = E("Anuluj", "Cancel", "Abbrechen", "Cancelar", "Annuler", "Скасувати"),
 
-        // ─────────────── Quick Fix ───────────────
+        // Quick Fix
         ["QF_Title"] = E("Szybka naprawa", "Quick Fix", "Schnellreparatur", "Reparación rápida", "Réparation rapide", "Швидке виправлення"),
         ["QF_Subtitle"] = E("Wykonuje bezpieczne operacje bez konieczności restartu.", "Runs safe operations with no restart required.", "Führt sichere Vorgänge ohne Neustart aus.", "Ejecuta operaciones seguras sin necesidad de reiniciar.", "Exécute des opérations sûres sans redémarrage.", "Виконує безпечні операції без потреби перезапуску."),
         ["QF_WillDo"] = E("WYKONA:", "WILL DO:", "WIRD AUSGEFÜHRT:", "REALIZARÁ:", "EFFECTUERA :", "ВИКОНАЄ:"),
@@ -108,7 +108,7 @@ internal static class Translations
         ["QF_DoneOk"] = E("Szybka naprawa zakończona pomyślnie.", "Quick Fix completed successfully.", "Schnellreparatur erfolgreich abgeschlossen.", "Reparación rápida completada con éxito.", "Réparation rapide terminée avec succès.", "Швидке виправлення успішно завершено."),
         ["QF_DoneWarn"] = E("Zakończono z ostrzeżeniami — sprawdź wyniki powyżej.", "Finished with warnings — check the results above.", "Mit Warnungen abgeschlossen — Ergebnisse oben prüfen.", "Finalizado con advertencias — revisa los resultados arriba.", "Terminé avec des avertissements — vérifiez les résultats ci-dessus.", "Завершено з попередженнями — перегляньте результати вище."),
 
-        // ─────────────── Advanced Fix ───────────────
+        // Advanced Fix
         ["AF_Title"] = E("Zaawansowana naprawa", "Advanced Fix", "Erweiterte Reparatur", "Reparación avanzada", "Réparation avancée", "Розширене виправлення"),
         ["AF_Subtitle"] = E("Uruchamia SFC, DISM i resetuje składniki Windows Update.", "Runs SFC, DISM and resets Windows Update components.", "Führt SFC, DISM aus und setzt Windows-Update-Komponenten zurück.", "Ejecuta SFC, DISM y restablece los componentes de Windows Update.", "Exécute SFC, DISM et réinitialise les composants de Windows Update.", "Запускає SFC, DISM та скидає компоненти Windows Update."),
         ["AF_RestartWarnTitle"] = E("Wymagany restart po zakończeniu", "Restart required when finished", "Nach Abschluss ist ein Neustart erforderlich", "Se requiere reinicio al finalizar", "Redémarrage requis à la fin", "Після завершення потрібен перезапуск"),
@@ -154,7 +154,7 @@ internal static class Translations
         ["AF_RestartConfirmTitle"] = E("Potwierdzenie restartu", "Confirm restart", "Neustart bestätigen", "Confirmar reinicio", "Confirmer le redémarrage", "Підтвердження перезапуску"),
         ["AF_ShutdownComment"] = E("OPSW11: restart po naprawie systemu.", "OPSW11: restart after system repair.", "OPSW11: Neustart nach Systemreparatur.", "OPSW11: reinicio tras la reparación del sistema.", "OPSW11 : redémarrage après réparation système.", "OPSW11: перезапуск після відновлення системи."),
 
-        // ─────────────── Custom Fix ───────────────
+        // Custom Fix
         ["CF_Title"] = E("Naprawa własna", "Custom Fix", "Benutzerdefinierte Reparatur", "Reparación personalizada", "Réparation personnalisée", "Власне виправлення"),
         ["CF_Subtitle"] = E("Zaznacz operacje do wykonania i kliknij Uruchom wybrane.", "Select the operations to run and click Run selected.", "Wähle die auszuführenden Vorgänge und klicke auf Ausgewählte starten.", "Selecciona las operaciones a ejecutar y haz clic en Ejecutar seleccionadas.", "Sélectionnez les opérations à exécuter et cliquez sur Exécuter la sélection.", "Виберіть операції для виконання та натисніть Запустити вибрані."),
         ["CF_Group_Cleanup"] = E("CZYSZCZENIE", "CLEANUP", "BEREINIGUNG", "LIMPIEZA", "NETTOYAGE", "ОЧИЩЕННЯ"),
@@ -175,7 +175,7 @@ internal static class Translations
         ["CF_Cancelled"] = E("anulowano", "cancelled", "abgebrochen", "cancelado", "annulé", "скасовано"),
         ["CF_ErrorPrefix"] = E("błąd", "error", "Fehler", "error", "erreur", "помилка"),
 
-        // ─────────────── Operations (name + description) ───────────────
+        // Operations (name + description)
         ["Op_UserTemp_Name"] = E("Wyczyść %TEMP% (pliki użytkownika)", "Clean %TEMP% (user files)", "%TEMP% bereinigen (Benutzerdateien)", "Limpiar %TEMP% (archivos de usuario)", "Nettoyer %TEMP% (fichiers utilisateur)", "Очистити %TEMP% (файли користувача)"),
         ["Op_UserTemp_Desc"] = E("Usuwa zawartość %TEMP%. Pliki w użyciu są pomijane.", "Removes the contents of %TEMP%. Files in use are skipped.", "Entfernt den Inhalt von %TEMP%. Dateien in Benutzung werden übersprungen.", "Elimina el contenido de %TEMP%. Los archivos en uso se omiten.", "Supprime le contenu de %TEMP%. Les fichiers en cours d'utilisation sont ignorés.", "Видаляє вміст %TEMP%. Файли, що використовуються, пропускаються."),
         ["Op_WinTemp_Name"] = E("Wyczyść C:\\Windows\\Temp", "Clean C:\\Windows\\Temp", "C:\\Windows\\Temp bereinigen", "Limpiar C:\\Windows\\Temp", "Nettoyer C:\\Windows\\Temp", "Очистити C:\\Windows\\Temp"),
@@ -207,7 +207,7 @@ internal static class Translations
         ["Op_OptimizeDisk_Name"] = E("Optymalizuj dysk systemowy (C:)", "Optimize system drive (C:)", "Systemlaufwerk optimieren (C:)", "Optimizar unidad del sistema (C:)", "Optimiser le disque système (C:)", "Оптимізувати системний диск (C:)"),
         ["Op_OptimizeDisk_Desc"] = E("Wykrywa SSD/HDD i uruchamia TRIM (SSD) lub defragmentację (HDD).", "Detects SSD/HDD and runs TRIM (SSD) or defragmentation (HDD).", "Erkennt SSD/HDD und führt TRIM (SSD) oder Defragmentierung (HDD) aus.", "Detecta SSD/HDD y ejecuta TRIM (SSD) o desfragmentación (HDD).", "Détecte SSD/HDD et exécute TRIM (SSD) ou défragmentation (HDD).", "Визначає SSD/HDD і запускає TRIM (SSD) або дефрагментацію (HDD)."),
 
-        // ─────────────── Logs ───────────────
+        // Logs
         ["Log_Title"] = E("Dziennik zdarzeń", "Event log", "Ereignisprotokoll", "Registro de eventos", "Journal des événements", "Журнал подій"),
         ["Log_Subtitle"] = E("Historia wszystkich operacji wykonanych w tej sesji.", "History of all operations performed in this session.", "Verlauf aller in dieser Sitzung durchgeführten Vorgänge.", "Historial de todas las operaciones realizadas en esta sesión.", "Historique de toutes les opérations effectuées dans cette session.", "Історія всіх операцій, виконаних у цій сесії."),
         ["Log_Filter"] = E("FILTR:", "FILTER:", "FILTER:", "FILTRO:", "FILTRE :", "ФІЛЬТР:"),
